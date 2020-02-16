@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+
+$body-size: 14px;
+$body-overflow-y: "auto";
+
+@import "../node_modules/bulma/bulma.sass";
+
+a,
+button {
+  outline: none;
+  cursor: pointer;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  background: linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
+
+  .home {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .board-container {
+      flex-grow: 1;
+    }
+  }
+}

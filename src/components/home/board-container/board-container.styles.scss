@@ -1,0 +1,19 @@
+.board-container {
+  padding: 12px;
+  width: 100%;
+  height: calc(100% - 48px);
+
+  .boards {
+    background: rgba(255, 255, 255, 0.3);
+    overflow-x: auto;
+    display: flex;
+    height: 100%;
+    padding: 16px;
+    border-radius: 8px;
+
+    @media screen and (max-width: 425px) {
+      overflow-y: auto;
+      flex-direction: column;
+    }
+  }
+}

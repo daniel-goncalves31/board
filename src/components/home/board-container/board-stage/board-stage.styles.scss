@@ -1,0 +1,21 @@
+.stage {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+  min-width: 240px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
+  height: fit-content;
+
+  &:not(:first-child) {
+    margin-left: 16px;
+  }
+
+  &:last-child {
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: 425px) {
+    margin: 8px 0 0 0;
+  }
+}

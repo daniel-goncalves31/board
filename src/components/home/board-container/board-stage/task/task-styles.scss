@@ -1,0 +1,17 @@
+.card {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+}
