@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../../../config/firebase";
+import { toast } from "react-toastify";
 
 interface Props {}
 
@@ -9,6 +11,16 @@ const NavBar: React.FC<Props> = () => {
     document.getElementById("navbar-burger")!.classList.toggle("is-active");
     document.getElementById("navbar-menu")!.classList.toggle("is-active");
   };
+
+  const logOut = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.error(error);
+      toast(error.message, { type: "error" });
+    }
+  };
+
   return (
     <nav className="navbar has-background-dark">
       <div className="navbar-brand">
@@ -42,7 +54,11 @@ const NavBar: React.FC<Props> = () => {
               </span>
               <span>New Project</span>
             </button>
-            <button type="button" className="button navbar-item is-light">
+            <button
+              type="button"
+              className="button navbar-item is-light"
+              onClick={logOut}
+            >
               Log Out
             </button>
           </div>

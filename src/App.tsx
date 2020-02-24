@@ -1,17 +1,16 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "./app.scss";
-import Home from "./components/home/Home";
-import Login from "./components/login/Login";
+import { UserProvider } from "./contexts/UserContext";
+import Routes from "./Routes";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/auth" component={Login} />
-      </Switch>
-    </BrowserRouter>
+    <UserProvider>
+      <Routes />
+      <ToastContainer pauseOnHover={true} position="bottom-right" />
+    </UserProvider>
   );
 };
 

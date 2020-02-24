@@ -1,18 +1,23 @@
 import { Form, Formik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
-import { auth, getUserData } from "../../config/firebase";
-import { useUserContext } from "../../contexts/UserContext";
 import FormInput from "../utils/FormInput";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { auth, saveUserData } from "../../config/firebase";
+import { CurrentUser, useUserContext } from "../../contexts/UserContext";
 
 interface Props {}
 
-const Login: React.FC<Props> = () => {
+const SignUp: React.FC<Props> = () => {
   const { setCurrentUser } = useUserContext();
 
   const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("Campo Obrigatório")
+      .min(3, "O nome deve conter ao menos 5 letras")
+      .max(100, "O nome deve conter no máximo 100 letras")
+      .notOneOf(["admin", "administrador"], "Palavra reservada"),
     email: Yup.string()
       .required("Campo Obrigatório")
       .email("Email inválido"),
@@ -25,14 +30,18 @@ const Login: React.FC<Props> = () => {
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(true);
     try {
-      const { user: firebaseUser } = await auth.signInWithEmailAndPassword(
+      const { user: firebaseUser } = await auth.createUserWithEmailAndPassword(
         values.email,
         values.password
       );
-      if (firebaseUser) {
-        const userData = await getUserData(firebaseUser);
-        setCurrentUser(userData);
-      }
+      const user: CurrentUser = {
+        id: firebaseUser!.uid,
+        name: values.name,
+        email: values.email,
+        imageUrl: "some image"
+      };
+      await saveUserData(user);
+      setCurrentUser(user);
     } catch (error) {
       setSubmitting(false);
       toast(error.message, { type: "error" });
@@ -40,16 +49,23 @@ const Login: React.FC<Props> = () => {
     }
   };
   return (
-    <div className="login">
+    <div className="signup">
       <div className="form-container">
-        <h1 className="title">Login</h1>
+        <h1 className="title">Sign Up</h1>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "", password: "", name: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           {({ isSubmitting, isValid, errors, touched }) => (
             <Form>
+              <FormInput
+                fieldName="name"
+                placeholder="Name"
+                type="text"
+                icon="fas fa-user"
+                error={!!(errors.name && touched.name)}
+              />
               <FormInput
                 fieldName="email"
                 placeholder="Email"
@@ -78,11 +94,11 @@ const Login: React.FC<Props> = () => {
         </Formik>
         <div className="is-divider" data-content="OR"></div>
         <div className="center">
-          <Link to="/signup">Create Account</Link>
+          <Link to="/login">Login</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

@@ -4,6 +4,7 @@ $body-size: 14px;
 $body-overflow-y: "auto";
 
 @import "../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulma-extensions/bulma-divider/dist/css/bulma-divider.sass";
 
 a,
 button {
@@ -11,19 +12,77 @@ button {
   cursor: pointer;
 }
 
+.is-divider {
+  margin: 24px 0;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 html,
 body,
 #root {
   height: 100vh;
-  background: linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
+
+  @media screen and (max-wdith: 768px) {
+    font-size: 16px;
+  }
+
+  .form-container {
+    min-width: 318px;
+    width: 32%;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+    h1 {
+      text-align: center;
+    }
+  }
 
   .home {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: #c2ffcc;
+    background-image: -webkit-linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
+    background-image: -moz-linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
+    background-image: -o-linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
+    background-image: linear-gradient(90deg, #c2ffcc 0%, #c1d7ff 100%);
 
     .board-container {
       flex-grow: 1;
     }
+  }
+
+  .login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #8ec5fc;
+    background-image: -webkit-linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+    background-image: -moz-linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+    background-image: -o-linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+    background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+  }
+
+  .signup {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #d9afd9;
+    background-image: -webkit-linear-gradient(180deg, #d9afd9 0%, #97d9e1 100%);
+    background-image: -moz-linear-gradient(180deg, #d9afd9 0%, #97d9e1 100%);
+    background-image: -o-linear-gradient(180deg, #d9afd9 0%, #97d9e1 100%);
+    background-image: linear-gradient(180deg, #d9afd9 0%, #97d9e1 100%);
   }
 }
