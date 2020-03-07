@@ -50,7 +50,7 @@ const SignUp: React.FC<Props> = () => {
   };
   return (
     <div className="signup">
-      <div className="form-container">
+      <div className="form-container card">
         <h1 className="title">Sign Up</h1>
         <Formik
           initialValues={{ email: "", password: "", name: "" }}

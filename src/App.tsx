@@ -4,12 +4,15 @@ import "./app.scss";
 import { UserProvider } from "./contexts/UserContext";
 import Routes from "./Routes";
 import "react-toastify/dist/ReactToastify.css";
+import { ModalProvider } from "./contexts/ModalContext";
 
 const App = () => {
   return (
     <UserProvider>
-      <Routes />
-      <ToastContainer pauseOnHover={true} position="bottom-right" />
+      <ModalProvider>
+        <Routes />
+        <ToastContainer pauseOnHover={true} position="bottom-right" />
+      </ModalProvider>
     </UserProvider>
   );
 };

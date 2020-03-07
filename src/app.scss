@@ -3,6 +3,8 @@
 $body-size: 14px;
 $body-overflow-y: "auto";
 
+$modal-content-width: 560px;
+
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma-extensions/bulma-divider/dist/css/bulma-divider.sass";
 
@@ -21,6 +23,24 @@ button {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.modal {
+  display: block;
+
+  .modal-card {
+    animation: showModal 0.4s ease forwards;
+
+    @keyframes showModal {
+      from {
+        top: 10%;
+      }
+
+      to {
+        top: 20%;
+      }
+    }
+  }
 }
 
 html,

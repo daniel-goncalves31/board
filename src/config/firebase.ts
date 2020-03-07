@@ -15,17 +15,59 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+export const firestore = firebase.firestore();
 
+// * Firestore
+export const saveProjectFirestore = async (
+  project: any,
+  projectId?: string
+) => {
+  try {
+    if (projectId) {
+    } else {
+      await firestore
+        .collection("projects")
+        .doc()
+        .set(project);
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// * Auth
 export const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-const firestore = firebase.firestore();
+export const continueWithGoogle = async () => {
+  try {
+    const { user: firebaseUser } = await auth.signInWithPopup(googleProvider);
+    return await getUserData(firebaseUser!, true);
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
+};
 
-export const getUserData = async (user: User) => {
+export const getUserData = async (user: User, isGoogle: boolean = false) => {
   const userRef = firestore.doc(`users/${user.uid}`);
-  const userSnapshot = await userRef.get();
+  let userSnapshot = await userRef.get();
 
   if (!userSnapshot.exists) {
-    return null;
+    if (!isGoogle) {
+      return null;
+    }
+
+    const userData: CurrentUser = {
+      id: user.uid,
+      name: user.displayName!,
+      email: user.email!,
+      imageUrl: "some image"
+    };
+
+    await userRef.set(userData);
+    userSnapshot = await userRef.get();
   }
 
   return userSnapshot.data() as CurrentUser;

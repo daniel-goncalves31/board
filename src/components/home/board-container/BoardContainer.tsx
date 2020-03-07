@@ -3,8 +3,11 @@ import "./board-container.styles.scss";
 import BoardStage from "./board-stage/BoardStage";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { data as initialData } from "../../../initialData";
+import { Project } from "../../../contexts/ProjectContext";
 
-interface Props {}
+interface Props {
+  project: Project;
+}
 
 const BoardContainer: React.FC<Props> = () => {
   const [data, setData] = useState(initialData);
@@ -51,15 +54,13 @@ const BoardContainer: React.FC<Props> = () => {
 
   return (
     <div className="board-container">
-      <div className="boards">
-        <DragDropContext onDragEnd={handleonDragEnd}>
-          {data.stages.map(stage => (
-            <BoardStage key={stage.id} stage={stage} />
-          ))}
-        </DragDropContext>
-      </div>
+      <DragDropContext onDragEnd={handleonDragEnd}>
+        {data.stages.map(stage => (
+          <BoardStage key={stage.id} stage={stage} />
+        ))}
+      </DragDropContext>
     </div>
   );
 };
 
-export default BoardContainer;
+export default React.memo(BoardContainer);

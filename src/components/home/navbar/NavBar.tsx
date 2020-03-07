@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { auth } from "../../../config/firebase";
 import { toast } from "react-toastify";
+import { auth } from "../../../config/firebase";
+import { useModalContext } from "../../../contexts/ModalContext";
 
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
+  const { setShowProjectModal } = useModalContext();
+
   const toggleMenuExpanded = () => {
     // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
     document.getElementById("navbar-burger")!.classList.toggle("is-active");
@@ -48,6 +51,7 @@ const NavBar: React.FC<Props> = () => {
             <button
               type="button"
               className="button navbar-item has-text-weight-bold is-primary"
+              onClick={() => setShowProjectModal(true)}
             >
               <span className="icon">
                 <i className="fas fa-plus"></i>
@@ -68,4 +72,4 @@ const NavBar: React.FC<Props> = () => {
   );
 };
 
-export default NavBar;
+export default React.memo(NavBar);

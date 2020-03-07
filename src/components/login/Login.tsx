@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { auth, getUserData } from "../../config/firebase";
+import { auth, getUserData, continueWithGoogle } from "../../config/firebase";
 import { useUserContext } from "../../contexts/UserContext";
 import FormInput from "../utils/FormInput";
 
@@ -39,9 +39,20 @@ const Login: React.FC<Props> = () => {
       console.error(error);
     }
   };
+
+  const handleContinueWithGoogle = async () => {
+    try {
+      const currentUser = await continueWithGoogle();
+      setCurrentUser(currentUser);
+    } catch (error) {
+      toast(error.message, { type: "error" });
+      console.error(error);
+    }
+  };
+
   return (
     <div className="login">
-      <div className="form-container">
+      <div className="form-container card">
         <h1 className="title">Login</h1>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -77,6 +88,13 @@ const Login: React.FC<Props> = () => {
           )}
         </Formik>
         <div className="is-divider" data-content="OR"></div>
+        <button
+          type="button"
+          className="button is-fullwidth is-normal"
+          onClick={handleContinueWithGoogle}
+        >
+          Continue With Google
+        </button>
         <div className="center">
           <Link to="/signup">Create Account</Link>
         </div>
